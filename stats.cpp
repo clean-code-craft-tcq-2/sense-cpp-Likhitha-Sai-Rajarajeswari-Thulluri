@@ -1,19 +1,6 @@
 #include "stats.h"
 
-struct computed
-{
-    float average;
-    float max;
-    float min;
-    computed()
-    {
-        average = 0;
-        max = 0;
-        min = 0;
-    }
-};
-
-computed ComputeStatistics(const std::vector<___>& ) {
+computed ComputeStatistics(const std::vector<___>& src) {
     computed obj;
     float sum = 0;
     for(float vec:src)
