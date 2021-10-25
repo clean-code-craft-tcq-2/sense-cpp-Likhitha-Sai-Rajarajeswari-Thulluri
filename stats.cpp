@@ -1,32 +1,23 @@
 #include "stats.h"
-
-Stats Statistics::ComputeStatistics(const std::vector<float>& src) 
+#include <algorithm>
+Stats Statistics::ComputeStatistics(const std::vector<float>& vecData) 
 {
-	Stats obj;
-	float sum = 0;
-	if(src.size())
-	{
-		obj.min = src[0];
-	}
-	for(auto vec:src)
-	{
-		if(obj.max<vec)
-			obj.max = vec;
-		if(obj.min>vec)
-			obj.min = vec;
-		sum+=vec;
-	}
-	if(src.size())
-	{
-		obj.average = sum/src.size();
-	}
-	return obj;
+   Stats statsObj;
+   if(vecData.empty())
+   {
+       statsObj.min = NAN;
+       statsObj.max = NAN;
+       statsObj.average = NAN;
+       return statsObj;
+   }
+   statsObj.min = *min_element(vecData.begin(), vecData.end());
+   statsObj.max = *max_element(vecData.begin(), vecData.end());
+   statsObj.average = accumulate(vecData.begin(), vecData.end(), 0.0)/vecData.size();
+   return statsObj;
 }
 
-IAlerter::IAlerter()
+IAlerter::IAlerter():emailSent(false) ,ledGlows(false)
 {
-ledGlows = false;
-emailSent = false;
 }
 
 StatsAlerter::StatsAlerter(float maxThreshold, std::vector<IAlerter*> vecIAlerter)
@@ -43,10 +34,7 @@ void StatsAlerter::checkAndAlert(const std::vector<float>& vecData)
          maxElement = ele;
    if(maxElement>m_maxThreshold)
    {
-       for(auto IAleterEle:m_vecIAlerter)
-       {
-           IAleterEle->emailSent = true;
-           IAleterEle->ledGlows = true;
-        }
+      m_vecIAlerter[0]->emailSent = true;
+      m_vecIAlerter[1]->ledGlows = true;
    }
 }
