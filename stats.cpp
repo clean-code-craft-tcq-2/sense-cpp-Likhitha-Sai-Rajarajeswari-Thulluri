@@ -1,5 +1,6 @@
 #include "stats.h"
 #include <algorithm>
+#include <numeric>
 Stats Statistics::ComputeStatistics(const std::vector<float>& vecData) 
 {
    Stats statsObj;
