@@ -1,16 +1,11 @@
 #include <vector>
+#include<cmath>
 
 struct Stats
 {
 	float average;
 	float max;
 	float min;
-	Stats()
-	{
-		average = 0;
-		max = 0;
-		min = 0;
-	}
 };
 
 namespace Statistics {
